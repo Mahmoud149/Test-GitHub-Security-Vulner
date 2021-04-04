@@ -1,0 +1,18 @@
+id: 5436f471-b03d-41cb-b333-65891f887c45
+name: Test GitHub Security Vulner
+description: |
+  'This alerts when there is a new security vulnerability in a GitHub repository.'
+severity: Informational
+requiredDataConnectors: []
+queryFrequency: 1h
+queryPeriod: 1h
+triggerOperator: gt
+triggerThreshold: 0
+query: |
+
+  Sysmon
+  | where EventID == 1 and process_path contains "cmd.exe" 
+  | extend AccountCustomEntity = UserName 
+  | extend HostCustomEntity = Computer 
+  | extend IPCustomEntity = Source 
+  | extend FileHashCustomEntity = hash_sha256
